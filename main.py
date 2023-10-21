@@ -1,44 +1,47 @@
 import pygame
+import os
+import time
+import random
 
-class Jogador:
-  def __init__(self):
-    self.posicao = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-
-  def mover(self, dt):
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w]:
-      self.posicao.y -= 300 * dt
-    if keys[pygame.K_s]:  
-      self.posicao.y += 300 * dt
-    if keys[pygame.K_a]:
-      self.posicao.x -= 300 * dt      
-    if keys[pygame.K_d]:
-      self.posicao.x += 300 * dt
-
-# pygame setup
 pygame.init()
-screen = pygame.display.set_mode((1280, 720))
-clock = pygame.time.Clock()
-running = True
 
-jogador = Jogador() 
+# set a window
+WIDTH, HEIGHT = 950, 750
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Space Invaders - Projeto Final")
 
-while running:
+# background image
+BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background.jpg")), (WIDTH, HEIGHT))
 
-  # event handling  
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      running = False
+def main(): # main program
+    run = True
+    FPS = 60
+    clock = pygame.time.Clock()
 
-  # desenhar tela
-  screen.fill("dark blue")
+    # create text fonts
+    main_font = pygame.font.SysFont("comicsansms", 50)
+    
+    def draw_inGame_window(lives = 5, lvl = 1):
+        WIN.blit(BG, (0,0))
 
-  dt = clock.tick(60) / 1000
+        # create labels
+        lives_label = main_font.render(f"Lives: {lives}", 1, (255,255,255))
+        lvl_label = main_font.render(f"Level: {lvl}", 1, (255,255,255))
 
-  jogador.mover(dt)
+        # draw labels
+        WIN.blit(lives_label, (10, 10))
+        WIN.blit(lvl_label, (WIDTH - lvl_label.get_width() - 10, 10))
 
-  pygame.draw.circle(screen, "red", jogador.posicao, 40)
+        pygame.display.update() 
 
-  pygame.display.flip()
+    while run:
+        clock.tick(FPS)
+        # check if the game is closed
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+        
+        draw_inGame_window()
 
-pygame.quit()
+main()

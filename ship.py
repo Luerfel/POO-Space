@@ -8,7 +8,6 @@ class Ship:
         self.x = x
         self.y = y
         self.hp = hp
-        self.img = None
         self.laser_img = None
         self.lasers = []
         self.cool_down_counter = 0

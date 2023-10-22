@@ -1,8 +1,7 @@
 import pygame
 import os
-import time
-import random
 
+ship_imagem = os.path.join("assets", "main_ship.png")
 class Ship:
     def __init__(self, x, y, hp=100):
         self.x = x
@@ -14,7 +13,7 @@ class Ship:
     
     def draw(self, window):
         # Carrega a imagem
-        image = pygame.image.load('main_ship.png')
+        image = pygame.image.load(ship_imagem)
 
         # Define o tamanho desejado  
         size = (100, 100)

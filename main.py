@@ -15,8 +15,7 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Invaders - Projeto Final")
 
 # background image
-BG = pygame.transform.scale(pygame.image.load(os.path.join("POO-Space/assets", "background.jpg")), (WIDTH, HEIGHT))
-# caso der erro no de cima, usar o seguinte -> "BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background.jpg")), (WIDTH, HEIGHT))"
+BG = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background.jpg")), (WIDTH, HEIGHT))
 
 def main(): # main program
 

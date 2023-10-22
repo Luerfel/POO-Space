@@ -14,12 +14,9 @@ class Ship:
         self.cool_down_counter = 0
     
     def draw(self, window):
-        # Carrega a imagem
-        image = pygame.image.load('main_ship.png')
-
-        # Define o tamanho desejado  
+        # define the size of the ship
         size = (100, 100)
 
-        # Desenha diretamente a imagem redimensionada
-        window.blit(pygame.transform.scale(image, size), (self.x, self.y))
+        # draw the ship
+        window.blit(pygame.transform.scale(self.img, size), (self.x, self.y))
 

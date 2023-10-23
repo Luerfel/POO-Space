@@ -20,10 +20,10 @@ background = Background(bg_filename)
 
 
 run = True
-FPS = 30
+FPS = 60
 clock = pygame.time.Clock()
 player = Player(5, 5, 1)
-ship = Ship(WIDTH/2,HEIGHT/2)  # cria o objeto nave e coloca ele no meio do mapa
+ship = Ship(WIDTH/2,HEIGHT/2)  # cria o objeto nave 
 while run :
     clock.tick(FPS)
 

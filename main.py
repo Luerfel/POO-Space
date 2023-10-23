@@ -24,6 +24,8 @@ FPS = 60
 clock = pygame.time.Clock()
 player = Player(5, 5, 1)
 ship = Ship(WIDTH/2,HEIGHT/2)  # cria o objeto nave 
+
+main_font = pygame.font.SysFont("comicsansms", 50)
 while run :
     clock.tick(FPS)
 
@@ -34,6 +36,7 @@ while run :
             pygame.quit()
         
     background.draw(WIN)
+    keys = pygame.key.get_pressed()
         # movimento da nave
     keys = pygame.key.get_pressed()
     if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and ship.x - player.speed > 0: # move a esquerda
@@ -44,6 +47,7 @@ while run :
         ship.y -= player.speed  
     if (keys[pygame.K_DOWN] or keys[pygame.K_s]) and ship.y - player.speed + 50 < HEIGHT: # move para baixo
         ship.y += player.speed   
+    
     
     ship.draw(WIN)
     pygame.display.update()

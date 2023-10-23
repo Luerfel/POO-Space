@@ -1,8 +1,7 @@
 import pygame
 import os
-
 ship_imagem = os.path.join("assets", "main_ship.png")
-class Ship:
+class Ship():
     def __init__(self, x, y, hp=100):
         self.x = x
         self.y = y

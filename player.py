@@ -15,7 +15,7 @@ class Player(Ship):
         self.ship_img = pygame.transform.rotate(self.ship_img, -90)
 
         self.__lives = 5 
-        self.__lvl = 1
+        self.__lvl = 0
     
     # move the ship
     def move_ship(self, keys, WIDTH=1280, HEIGHT=720):
@@ -48,6 +48,14 @@ class Player(Ship):
 
         # draw and rotate the ship
         window.blit(rotated_img, new_rect.topleft)
+
+    # going through next level
+    def increment_lvl(self):
+        self.__lvl += 1	
+    
+    # losing lives
+    def decrement_lives(self):
+        self.__lives -= 1
 
     # get the values of the atributes    
     def get_lives(self):

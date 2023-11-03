@@ -6,6 +6,7 @@ import random
 from background import Background
 from player import Player
 from enemy import Enemy
+from laser import collide
 
 pygame.init()
 
@@ -46,31 +47,48 @@ def main_game():
             Enemy.speed_increment += 0.2 # increase the speed of the enemies
 
     # main game loop -----------------------------------------------------------------------------------------------------------------
-    while run :
+    while run:
         clock.tick(FPS)
         
         if isClosed():
+            pygame.quit()
             run = False
         
         if len(Enemy.wave) == 0: # if there are no enemies (https://miro.medium.com/v2/resize:fit:958/1*P9xAw_nF6ohqlKMFpgcoxA.jpeg)
             next_lvl()
 
-        if player.get_lives() <= 0: # if the player lost
+        if player.get_lives() <= 0: # if the player lost all lives
             background.lost()
             pygame.display.update()
             time.sleep(3)
             run = False
+        
+        if player.hp <= 0: # if the player lost all hp
+            player.decrement_lives()
+            player.hp = 100
 
-        background.draw(player) # draw the background
+        background.in_game(player) # draw the background
 
-        player.move_ship(pygame.key.get_pressed()) # move the ship
+        player.move_ship(pygame.key.get_pressed(),  pygame.mouse.get_pos(),WIDTH, HEIGHT) # move the ship
         player.draw(WIN, pygame.mouse.get_pos()) # draw the ship
 
         for enemy in Enemy.wave: # go through the enemies
-            enemy.move()
-            if enemy.y + enemy.get_height() > HEIGHT:
+
+            enemy.move() # move the enemy
+
+            if random.randrange(0, 2*FPS) == 1: # 50% of chance to shoot every second
+                enemy.shoot()
+            enemy.move_lasers(player, HEIGHT, WIDTH) # move the lasers
+
+            if collide(enemy, player): # if the enemy collides with the player
                 player.decrement_lives()
-                Enemy.wave.remove(enemy)    # remove the enemy from the list of enemies
+                Enemy.wave.remove(enemy)
+
+            elif enemy.y + enemy.get_height() > HEIGHT: # if the enemy is off screen
+                player.decrement_lives()
+                Enemy.wave.remove(enemy) 
+
+        player.move_lasers(Enemy.wave, HEIGHT, WIDTH) # move the lasers
 
         pygame.display.update() # update the display
 

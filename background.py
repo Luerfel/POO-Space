@@ -18,7 +18,6 @@ class Background:
         self.__WIDTH = w
         self.__HEIGHT = h
 
-        
     def in_game(self, player):
         # draw the background
         self.__WIN.blit(self.image, (self.rect_x, self.rect_y),

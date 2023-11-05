@@ -149,7 +149,7 @@ class Player(Ship):
     
     # losing lives
     def decrement_lives(self):
-        self.__lives -= 0
+        self.__lives -= 1
 
     # get more lives
     def increment_lives(self):

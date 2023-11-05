@@ -51,6 +51,7 @@ def main_game():
 
         player.increment_lvl()  # go to the next level
         Enemy.speed_increment += 0.1 # increase the speed of the enemies
+        Enemy.wave_length += 5 # increase amount of enemies per wave
         Buff.wave_length += 1 # increase amount of buffs per wave
         Buff.speed_increment += 0.1 # increase the speed of the buffs to match the enemies
 
@@ -116,7 +117,7 @@ def main_game():
                         Buff.buff_Timer[buff.type] = 10*FPS # adds 10 seconds of buff
                         player.buff_player(buff) # applies the buff to the player
                     case "moreLives":
-                        # doesnt need a timer, since its not a effect
+                        # doesnt need a timer, since its not an effect
                         player.buff_player(buff) # applies the buff to the player
                     case "piercingBullets":
                         Buff.buff_Timer[buff.type] = 10*FPS # adds 10 seconds of buff

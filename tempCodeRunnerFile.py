@@ -1,1 +1,1 @@
-HEIGHT
+["atackspeed", "fasterBullets", "piercingBullets", "moreLives"]

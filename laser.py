@@ -33,7 +33,7 @@ class Laser:
         self.y += dy * self.__speed
 
     def isOff_screen(self, width, height):
-        return self.y + self.img.get_height() >= height or self.y <= 0 or self.x + self.img.get_width() >= width or self.x <= 0
+        return self.y + self.img.get_height() >= height or self.y <= 0 or self.x + self.img.get_width() >= width + 70 or self.x <= -70
     
     def collision(self, obj):
         return collide(self, obj)

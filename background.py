@@ -3,6 +3,7 @@ import os
 
 from enemy import Enemy
 from player import Player
+from buff import Buff
 
 # this class is used to draw all the screens
 class Background:
@@ -38,6 +39,10 @@ class Background:
             enemy.draw(self.__WIN)
             for laser in enemy.lasers:
                 laser.draw(self.__WIN)
+        
+        # draw the buffs on the screen
+        for buff in Buff.buffs_wave: 
+            buff.draw(self.__WIN)
         
         # draw the lasers on the screen
         for laser in player.lasers: 

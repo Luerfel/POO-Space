@@ -5,7 +5,6 @@ import math
 from laser import Laser
 
 class Ship():
-    COOLDOWN = 30 # cooldown for the lasers
 
     # initialize the class
     def __init__(self, x, y, ship_img, hp=100):
@@ -18,6 +17,7 @@ class Ship():
         self.laser_img = None
         self.lasers = []
         self.cd_counter = 0 # cooldown counter
+        self.cd = 30 # half a second of base cooldown
     
     def draw(self, window):
         window.blit(self.ship_img, (self.x, self.y)) # draw the ship
@@ -35,7 +35,7 @@ class Ship():
                 self.lasers.remove(laser)
         
     def cooldown(self):
-        if self.cd_counter >= self.COOLDOWN:
+        if self.cd_counter >= self.cd:
             self.cd_counter = 0
         elif self.cd_counter > 0:
             self.cd_counter += 1

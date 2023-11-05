@@ -6,6 +6,7 @@ import random
 from background import Background
 from player import Player
 from enemy import Enemy
+from buff import Buff
 from laser import collide
 
 pygame.init()
@@ -27,7 +28,7 @@ def main_game():
 
     # create the player
     PLAYER_SHIP = pygame.transform.scale(pygame.image.load(os.path.join("assets", "main_ship.png")), (70,70))
-    player = Player(WIDTH/2 - (PLAYER_SHIP.get_width()/2), HEIGHT - 100, 5, PLAYER_SHIP)  
+    player = Player(WIDTH/2 - (PLAYER_SHIP.get_width()/2), HEIGHT - 100, PLAYER_SHIP)  
 
     # functions that'll be used in the game ------------------------------------------------------------------------------------------
     def isClosed(): # check if the game is closed
@@ -38,13 +39,20 @@ def main_game():
 
     def next_lvl(): # go to the next level
         # create the enemies
-            for i in range(Enemy.wave_length):
-                enemy = Enemy(random.randint(50, WIDTH - 50), random.randint(-1500, -100), random.choice(["red", "green", "blue"]), random.choice([100, 150, 200]))
-                Enemy.wave.append(enemy)
+        for i in range(Enemy.wave_length):
+            enemy = Enemy(random.randint(50, WIDTH - 50), random.randint(-1500, -100), random.choice(["red", "green", "blue"]), random.choice([100, 150, 200]))
+            Enemy.wave.append(enemy)
 
-            player.increment_lvl()  # go to the next level
-            Enemy.wave_length += 5  # increase the number of enemies
-            Enemy.speed_increment += 0.2 # increase the speed of the enemies
+        # create the buffs
+        for i in range(Buff.wave_length):
+            # buff = Buff(random.randint(50, WIDTH - 50), random.randint(-800, -50), random.choice(["atackspeed", "fasterBullets", "speed", "moreLives", "piercingBullets", "shield", "laser"]))
+            buff = Buff(random.randint(50, WIDTH - 50), random.randint(-800, -50), random.choice(["atackspeed", "fasterBullets", "piercingBullets", "moreLives"]))
+            Buff.buffs_wave.append(buff)
+
+        player.increment_lvl()  # go to the next level
+        Enemy.speed_increment += 0.1 # increase the speed of the enemies
+        Buff.wave_length += 1 # increase amount of buffs per wave
+        Buff.speed_increment += 0.1 # increase the speed of the buffs to match the enemies
 
     # main game loop -----------------------------------------------------------------------------------------------------------------
     while run:
@@ -72,8 +80,8 @@ def main_game():
         player.move_ship(pygame.key.get_pressed(),  pygame.mouse.get_pos(),WIDTH, HEIGHT) # move the ship
         player.draw(WIN, pygame.mouse.get_pos()) # draw the ship
 
-        for enemy in Enemy.wave: # go through the enemies
-
+        # go through the enemies 
+        for enemy in Enemy.wave: 
             enemy.move() # move the enemy
 
             if random.randrange(0, 2*FPS) == 1: # 50% of chance to shoot every second
@@ -87,6 +95,39 @@ def main_game():
             elif enemy.y + enemy.get_height() > HEIGHT: # if the enemy is off screen
                 player.decrement_lives()
                 Enemy.wave.remove(enemy) 
+        
+        # go through the buffs
+        for buff in Buff.buffs_wave:
+            buff.move() # move the buff
+            buff.run_timer() # run the timer of the buff
+            player.buff_player() # check if the active buffs
+
+            if collide(buff, player): # if the buff collides with the player
+                Buff.buffs_wave.remove(buff)
+
+                match buff.type:
+                    case "atackspeed":
+                        Buff.buff_Timer[buff.type] = 10*FPS # adds 10 seconds of buff
+                        player.buff_player(buff) # applies the buff to the player
+                    case "fasterBullets":
+                        Buff.buff_Timer[buff.type] = 10*FPS # adds 10 seconds of buff
+                        player.buff_player(buff) # applies the buff to the player
+                    case "speed":
+                        Buff.buff_Timer[buff.type] = 10*FPS # adds 10 seconds of buff
+                        player.buff_player(buff) # applies the buff to the player
+                    case "moreLives":
+                        # doesnt need a timer, since its not a effect
+                        player.buff_player(buff) # applies the buff to the player
+                    case "piercingBullets":
+                        Buff.buff_Timer[buff.type] = 10*FPS # adds 10 seconds of buff
+                        player.buff_player(buff) # applies the buff to the player
+                    case "shield":
+                        pass
+                    case "laser":
+                        pass
+            
+            elif buff.y + buff.get_height() > HEIGHT: # if is off screen
+                Buff.buffs_wave.remove(buff)
 
         player.move_lasers(Enemy.wave, HEIGHT, WIDTH) # move the lasers
 

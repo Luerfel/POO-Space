@@ -37,3 +37,4 @@ class Laser:
     
     def collision(self, obj):
         return collide(self, obj)
+#.

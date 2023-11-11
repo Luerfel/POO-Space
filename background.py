@@ -58,3 +58,4 @@ class Background:
         # draw the text on the screen
         lost_text = font.render(f'You lost!', True, (255,255,255))
         self.__WIN.blit(lost_text, (self.__WIDTH/2 - lost_text.get_width()/2, self.__HEIGHT/2 - lost_text.get_height()/2))   
+#.

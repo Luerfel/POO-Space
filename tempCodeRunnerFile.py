@@ -1,1 +1,0 @@
-["atackspeed", "fasterBullets", "piercingBullets", "moreLives"]

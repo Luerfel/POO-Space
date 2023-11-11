@@ -40,3 +40,4 @@ class Enemy(Ship):
             laser = Laser(x=posx, y=posy, speed=6, img=self.laser_img)
             self.lasers.append(laser)
             self.cd_counter = 1
+#.

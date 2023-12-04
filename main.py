@@ -2,12 +2,14 @@ import pygame
 import os
 import time
 import random
+import sys
 
 from background import Background
 from player import Player
 from enemy import Enemy
 from buff import Buff
 from laser import collide
+from Menu import MainMenu
 
 pygame.init()
 
@@ -25,6 +27,7 @@ def main_game():
     run = True
     FPS = 60
     clock = pygame.time.Clock()
+    
 
     # create the player
     PLAYER_SHIP = pygame.transform.scale(pygame.image.load(os.path.join("assets", "main_ship.png")), (70,70))
@@ -36,6 +39,8 @@ def main_game():
             if event.type == pygame.QUIT:
                 return True
         return False
+    
+
 
     def next_lvl(): # go to the next level
         # create the enemies
@@ -55,7 +60,11 @@ def main_game():
         Buff.wave_length += 1 # increase amount of buffs per wave
         Buff.speed_increment += 0.1 # increase the speed of the buffs to match the enemies
 
+    # call the start screen
+    tela_inicio = MainMenu()
+    tela_inicio.main_menu()
     # main game loop -----------------------------------------------------------------------------------------------------------------
+
     while run:
         clock.tick(FPS)
         

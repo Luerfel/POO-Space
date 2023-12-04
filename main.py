@@ -27,7 +27,8 @@ def main_game():
     run = True
     FPS = 60
     clock = pygame.time.Clock()
-    
+    pygame.mixer.music.load("assets/shakira.mp3")  # Carrega o arquivo de música
+    pygame.mixer.music.play(-1)  # Reproduz a música em um loop infinito
 
     # create the player
     PLAYER_SHIP = pygame.transform.scale(pygame.image.load(os.path.join("assets", "main_ship.png")), (70,70))
@@ -63,6 +64,7 @@ def main_game():
     # call the start screen
     tela_inicio = MainMenu()
     tela_inicio.main_menu()
+
     # main game loop -----------------------------------------------------------------------------------------------------------------
 
     while run:

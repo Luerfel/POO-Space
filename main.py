@@ -78,9 +78,10 @@ def main_game():
             next_lvl()
 
         if player.get_lives() <= 0: # if the player lost all lives
+            pygame.mixer.music.stop()  # Para a música quando sair do menu
             background.lost()
             pygame.display.update()
-            time.sleep(3)
+            time.sleep(10)
             run = False
         
         if player.hp <= 0: # if the player lost all hp

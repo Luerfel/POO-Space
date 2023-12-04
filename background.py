@@ -50,6 +50,8 @@ class Background:
     def get_font(self, size):
         return pygame.font.Font("assets/font.ttf", size)
     def lost(self):
+        pygame.mixer.music.load("assets/gameover.mp3")  # Carrega o arquivo de música
+        pygame.mixer.music.play(-1)  # Reproduz a música em um loop infinito
         # draw the background
         self.__WIN.blit(self.image, (self.rect_x, self.rect_y),
         area=(self.rect_x, self.rect_y, self.__WIDTH, self.__HEIGHT))

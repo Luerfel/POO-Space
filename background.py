@@ -47,15 +47,16 @@ class Background:
         # draw the lasers on the screen
         for laser in player.lasers: 
             laser.draw(self.__WIN)
-    
+    def get_font(self, size):
+        return pygame.font.Font("assets/font.ttf", size)
     def lost(self):
         # draw the background
         self.__WIN.blit(self.image, (self.rect_x, self.rect_y),
         area=(self.rect_x, self.rect_y, self.__WIDTH, self.__HEIGHT))
 
-        font = pygame.font.SysFont('Arial', 60) # create a font
 
         # draw the text on the screen
-        lost_text = font.render(f'You lost!', True, (255,255,255))
+        lost_text = self.get_font(80).render("YOU LOST", True, "#b68f40")
+
         self.__WIN.blit(lost_text, (self.__WIDTH/2 - lost_text.get_width()/2, self.__HEIGHT/2 - lost_text.get_height()/2))   
 #.

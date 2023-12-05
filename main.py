@@ -29,7 +29,7 @@ def main_game():
     clock = pygame.time.Clock()
     pygame.mixer.music.load("assets/shakira.mp3")  # Carrega o arquivo de música
     pygame.mixer.music.play(-1)  # Reproduz a música em um loop infinito
-
+    pygame.mixer.music.set_volume(0.3)  # Define o volume para a metade (0.0 é silencioso, 1.0 é o volume máximo)
     # create the player
     PLAYER_SHIP = pygame.transform.scale(pygame.image.load(os.path.join("assets", "main_ship.png")), (70,70))
     player = Player(WIDTH/2 - (PLAYER_SHIP.get_width()/2), HEIGHT - 100, PLAYER_SHIP)  
@@ -96,10 +96,10 @@ def main_game():
         # go through the enemies 
         for enemy in Enemy.wave: 
             enemy.move() # move the enemy
-
+            enemy.move_lasers(player, HEIGHT, WIDTH) # move the lasers
             if random.randrange(0, 2*FPS) == 1: # 50% of chance to shoot every second
                 enemy.shoot()
-            enemy.move_lasers(player, HEIGHT, WIDTH) # move the lasers
+                
 
             if collide(enemy, player): # if the enemy collides with the player
                 player.decrement_lives()
